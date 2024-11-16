@@ -8,6 +8,7 @@ var PlayerControllerEnabled = false # Player movement enabled/disabled
 var DirectionToggle = false # Right = false, Left = true
 var l_hand_origin : Vector2 # Origin point of LHand
 var r_hand_origin : Vector2 # Origin point of RHand
+var last_known_pivot = 0 # last known good weapon pivot
 
 # Temporary placeholder for Stats
 @export var Strength: int = 10
@@ -49,23 +50,23 @@ func _physics_process(_delta): #Change to _process if character blurry
 	velocity.y = move_toward(velocity.y, Speed * direction.y, Accel)
 	
 	#Player attack animation
-	if Input.is_action_just_pressed("PlayerAttack"):
-		var DirectionString #Concat with Animation name
-		var Thrown_weapon : Node2D # Node returned from bullet container
-		if DirectionToggle: DirectionString = "L"
-		else: DirectionString = "R"
-		animation_player.play("ThrowHold_" + str(DirectionString))
-		
-		Thrown_weapon = BulletContainer.get_bullet()
-		Thrown_weapon.visible = true
-		Thrown_weapon.global_position = Held_weapon.global_position
-		Thrown_weapon.rotation = r_weapon_pivot.rotation
-		
-	elif Input.is_action_just_pressed("PlayerBlock"):
-		l_hand.position = Vector2(0,l_hand.position.y)
-	elif Input.is_action_just_released("PlayerBlock"):
-		l_hand.position = l_hand_origin
-		if DirectionToggle: l_hand.position *= Vector2(-1,1) # Swap position if facing left
+	if !WeaponSwinging:
+		if Input.is_action_just_pressed("PlayerAttack"):
+			var DirectionString #Concat with Animation name
+			if DirectionToggle: DirectionString = "L"
+			else: DirectionString = "R"
+			animation_player.play("ThrowHold_" + str(DirectionString))
+			WeaponSwinging = true
+			
+		elif Input.is_action_just_pressed("PlayerBlock"):
+			l_hand.position = Vector2(0,l_hand.position.y)
+		elif Input.is_action_just_released("PlayerBlock"):
+			l_hand.position = l_hand_origin
+			if DirectionToggle: l_hand.position *= Vector2(-1,1) # Swap position if facing left
+	elif WeaponSwinging and Input.is_action_just_released("PlayerAttack"):
+		#print("Swining action released")
+		WeaponSwinging = false
+		animation_player.play("RESET")
 	
 	move_and_slide()
 	Handle_Weapon_Rotation()
@@ -80,22 +81,40 @@ func Flip_sprite_Direction(Direction):
 	anim_body.flip_h = Direction
 
 func Handle_Weapon_Rotation():
-	var weapon_pivot_rotation = snapped(r_weapon_pivot.rotation_degrees,1)
-	var weapon_pivot_abs = abs(weapon_pivot_rotation)
+	
+	# Analysis the pivot based on mouse position
+	r_weapon_pivot.look_at(get_global_mouse_position())
+	var attempted_pivot = snapped(r_weapon_pivot.rotation_degrees,1)
+	var attempted_pivot_abs = abs(attempted_pivot)
+	#print("attempted_pivot =" + str(attempted_pivot))
+	# Ensure that pivot doesn't rotate behind back while swinging
+	if WeaponSwinging:
+		if (DirectionToggle and (attempted_pivot_abs <= 90 or attempted_pivot_abs >= 270)):
+			r_weapon_pivot.rotation_degrees = last_known_pivot
+			return
+		elif (!DirectionToggle and (attempted_pivot_abs >= 90 and attempted_pivot_abs <= 270)):
+			r_weapon_pivot.rotation_degrees = last_known_pivot
+			return
+		else:
+			r_weapon_pivot.rotation_degrees = attempted_pivot
+			last_known_pivot = attempted_pivot
+	
 	# Reset rotation by adding/subtracting 360 degrees
-	if weapon_pivot_rotation <= -360:
+	if attempted_pivot <= -360:
 		r_weapon_pivot.rotation_degrees += 360
+		attempted_pivot += 360
 		#print("Added 360 degrees")
-	elif weapon_pivot_rotation >= 360:
+	elif attempted_pivot >= 360:
 		r_weapon_pivot.rotation_degrees -= 360
+		attempted_pivot -= 360
 		#print("Subtracted 360 degrees")
 	
 	#  Flip the sprite based on pivot rotation
-	if !DirectionToggle and !WeaponSwinging and (weapon_pivot_abs > 90 and weapon_pivot_abs < 270): #Flip R->L
+	if !DirectionToggle and (attempted_pivot_abs > 90 and attempted_pivot_abs < 270): #Flip R->L
 		DirectionToggle = true
 		Flip_sprite_Direction(DirectionToggle)
 		#print("DirectionToggle Left")
-	elif DirectionToggle and !WeaponSwinging and (weapon_pivot_abs > 270 or weapon_pivot_abs < 90): #Flip L->R
+	elif DirectionToggle and (attempted_pivot_abs > 270 or attempted_pivot_abs < 90): #Flip L->R
 		DirectionToggle = false
 		Flip_sprite_Direction(DirectionToggle)
 		#print("DirectionToggled Right")
@@ -106,12 +125,6 @@ func Handle_Weapon_Rotation():
 	elif !DirectionToggle and !WeaponSwinging and snapped(r_hand.rotation_degrees,1) != 0: #Right side
 		r_hand.rotation_degrees = 0 # Set to default
 		#print("Rotating Hand position to 0")
-		
-	# Ensure that pivot doesn't rotate behind back
-	if (!DirectionToggle and (weapon_pivot_abs <= 90 or weapon_pivot_abs >= 270)):
-		r_weapon_pivot.look_at(get_global_mouse_position())
-	elif (DirectionToggle and weapon_pivot_abs >= 90 and weapon_pivot_abs <= 270):
-		r_weapon_pivot.look_at(get_global_mouse_position())
 
 func PlayerMovement(value):
 	#print("Player Movement = " + str(value))
@@ -119,3 +132,23 @@ func PlayerMovement(value):
 
 func character_stats() -> int:
 	return Strength
+
+func Throw_weapon():
+	var Thrown_weapon : Node2D # Node returned from bullet container
+	var vector_to_mouse : Vector2 = -(global_position - get_global_mouse_position()).normalized()
+	
+	Thrown_weapon = BulletContainer.get_bullet()
+	Thrown_weapon.visible = true
+	Thrown_weapon.global_position = Held_weapon.global_position
+	Thrown_weapon.rotation = r_weapon_pivot.rotation
+	
+	Thrown_weapon.velocity.x = move_toward(velocity.x, 250 * vector_to_mouse.x, Accel*300)
+	Thrown_weapon.velocity.y = move_toward(velocity.y, 250 * vector_to_mouse.y, Accel*300)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if Input.is_action_pressed("PlayerAttack"):
+		#print("Swinging Action being held")
+		animation_player.pause()
+	else:
+		WeaponSwinging = false
+		Throw_weapon()
