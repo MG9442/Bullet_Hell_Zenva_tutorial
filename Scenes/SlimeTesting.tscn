@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://fu0olufw3jhr"]
+
+[ext_resource type="Texture2D" uid="uid://bfmh3iei7sjk7" path="res://Assets/Enemy/Slimes/PurpleSlime.png" id="2_k02ui"]
+[ext_resource type="PackedScene" uid="uid://27b58ccbhwqm" path="res://Scenes/Slimehurtbox.tscn" id="3_gdxeq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nt8t0"]
+radius = 12.0
+
+[node name="PurpleTestSlime" type="CharacterBody2D"]
+z_index = 10
+collision_layer = 4
+collision_mask = 5
+motion_mode = 1
+wall_min_slide_angle = 0.0
+platform_floor_layers = 2147483647
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_k02ui")
+hframes = 2
+vframes = 2
+
+[node name="Hurtbox" parent="." node_paths=PackedStringArray("enemy", "bumpVector") instance=ExtResource("3_gdxeq")]
+enemy = NodePath("..")
+bumpVector = NodePath("../RayCast2D")
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_nt8t0")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(24, 0)

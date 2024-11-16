@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnj5jkm6qcggl"]
+
+[ext_resource type="Script" path="res://Scripts/target_debug.gd" id="1_7rnbw"]
+[ext_resource type="FontFile" uid="uid://bdlny4blmesbp" path="res://Assets/fonts/PixelOperator8.ttf" id="1_sqq4l"]
+[ext_resource type="Texture2D" uid="uid://b3e4wll1nm42u" path="res://TargetSprite.png" id="2_ejjf0"]
+
+[node name="TargetDebug" type="Marker2D"]
+z_index = 10
+gizmo_extents = 28.7
+script = ExtResource("1_7rnbw")
+
+[node name="Label" type="Label" parent="."]
+z_index = 6
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.0
+offset_top = -26.0
+offset_right = 40.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_sqq4l")
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_ejjf0")

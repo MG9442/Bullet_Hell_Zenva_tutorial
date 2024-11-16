@@ -1,0 +1,218 @@
+[gd_scene load_steps=14 format=3 uid="uid://dvxwkvoilvb0c"]
+
+[ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_qy233"]
+[ext_resource type="Script" path="res://Scripts/DebugModeUI.gd" id="2_ww2aj"]
+[ext_resource type="PackedScene" uid="uid://t4fqen3845vo" path="res://Scenes/background.tscn" id="6_yh5as"]
+[ext_resource type="PackedScene" uid="uid://b0e4vrq84uyv8" path="res://Scenes/KnightPlayer2DWHands.tscn" id="7_l44vk"]
+[ext_resource type="Script" path="res://Scripts/PlayerCamera.gd" id="9_ij1am"]
+[ext_resource type="PackedScene" uid="uid://bnj5jkm6qcggl" path="res://Scenes/target_debug.tscn" id="12_d1n4n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_da66s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v30o2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a6ptc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h8fwd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_icipg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0j08k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4sn38"]
+
+[node name="World" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="." groups=["GameManager"]]
+process_mode = 3
+script = ExtResource("1_qy233")
+
+[node name="DebugModeUI" type="CanvasLayer" parent="." groups=["DebugModeUI"]]
+process_mode = 3
+visible = false
+script = ExtResource("2_ww2aj")
+
+[node name="TitleLabel" type="Label" parent="DebugModeUI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -167.0
+offset_right = 167.0
+offset_bottom = 69.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "DEBUG MODE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AdminControlsContainer" type="VBoxContainer" parent="DebugModeUI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -286.0
+offset_top = 17.0
+offset_right = -90.0
+offset_bottom = 57.0
+grow_horizontal = 0
+
+[node name="AdminControls" type="Label" parent="DebugModeUI/AdminControlsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Admin Controls:"
+
+[node name="FreezeTime" type="CheckBox" parent="DebugModeUI/AdminControlsContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_da66s")
+text = "Freeze Time"
+flat = true
+
+[node name="PropertiesContainer" type="VBoxContainer" parent="DebugModeUI"]
+offset_left = 32.0
+offset_top = 27.0
+offset_right = 243.0
+offset_bottom = 62.0
+
+[node name="MainTitle" type="Label" parent="DebugModeUI/PropertiesContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Object Properties"
+
+[node name="NameProperty" type="HBoxContainer" parent="DebugModeUI/PropertiesContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="DebugModeUI/PropertiesContainer/NameProperty"]
+layout_mode = 2
+text = "Name"
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugModeUI/PropertiesContainer/NameProperty"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label1" type="Label" parent="DebugModeUI/PropertiesContainer/NameProperty"]
+layout_mode = 2
+text = "GreenSlime1"
+
+[node name="MarginContainer2" type="MarginContainer" parent="DebugModeUI/PropertiesContainer/NameProperty"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TransformProperty" type="HBoxContainer" parent="DebugModeUI/PropertiesContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="DebugModeUI/PropertiesContainer/TransformProperty"]
+layout_mode = 2
+text = "Transform"
+
+[node name="SpinBox1" type="SpinBox" parent="DebugModeUI/PropertiesContainer/TransformProperty"]
+layout_mode = 2
+min_value = -1e+10
+max_value = 1e+10
+rounded = true
+
+[node name="SpinBox2" type="SpinBox" parent="DebugModeUI/PropertiesContainer/TransformProperty"]
+layout_mode = 2
+min_value = -1e+10
+max_value = 1e+10
+rounded = true
+
+[node name="ScaleProperty" type="HBoxContainer" parent="DebugModeUI/PropertiesContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="DebugModeUI/PropertiesContainer/ScaleProperty"]
+layout_mode = 2
+text = "Scale"
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugModeUI/PropertiesContainer/ScaleProperty"]
+layout_mode = 2
+
+[node name="CheckButton" type="CheckButton" parent="DebugModeUI/PropertiesContainer/ScaleProperty"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_v30o2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_a6ptc")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_h8fwd")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_icipg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_0j08k")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4sn38")
+button_pressed = true
+action_mode = 0
+alignment = 1
+clip_text = true
+vertical_icon_alignment = 0
+
+[node name="SpinBox1" type="SpinBox" parent="DebugModeUI/PropertiesContainer/ScaleProperty"]
+layout_mode = 2
+max_value = 1e+10
+step = 0.1
+
+[node name="SpinBox2" type="SpinBox" parent="DebugModeUI/PropertiesContainer/ScaleProperty"]
+layout_mode = 2
+max_value = 1e+10
+step = 0.1
+
+[node name="ZIndex" type="HBoxContainer" parent="DebugModeUI/PropertiesContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="DebugModeUI/PropertiesContainer/ZIndex"]
+layout_mode = 2
+text = "Z Index"
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugModeUI/PropertiesContainer/ZIndex"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpinBox1" type="SpinBox" parent="DebugModeUI/PropertiesContainer/ZIndex"]
+layout_mode = 2
+min_value = -1e+10
+max_value = 1e+10
+rounded = true
+
+[node name="Health" type="HBoxContainer" parent="DebugModeUI/PropertiesContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="DebugModeUI/PropertiesContainer/Health"]
+layout_mode = 2
+text = "Health"
+
+[node name="MarginContainer" type="MarginContainer" parent="DebugModeUI/PropertiesContainer/Health"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpinBox1" type="SpinBox" parent="DebugModeUI/PropertiesContainer/Health"]
+layout_mode = 2
+max_value = 1e+10
+step = 5.0
+rounded = true
+
+[node name="KnightPlayer2D" parent="." groups=["Player"] instance=ExtResource("7_l44vk")]
+z_index = 5
+position = Vector2(96, 12)
+platform_floor_layers = 4294967291
+
+[node name="PlayerCamera" type="Camera2D" parent="KnightPlayer2D"]
+process_mode = 3
+zoom = Vector2(2.75, 2.75)
+position_smoothing_enabled = true
+script = ExtResource("9_ij1am")
+
+[node name="TargetPlayer" parent="KnightPlayer2D" instance=ExtResource("12_d1n4n")]
+visible = false
+
+[node name="TargetA" parent="." instance=ExtResource("12_d1n4n")]
+z_index = 25
+position = Vector2(98, 124)
+Show_label = false
+
+[node name="Background" parent="." instance=ExtResource("6_yh5as")]
+
+[connection signal="toggled" from="DebugModeUI/AdminControlsContainer/FreezeTime" to="GameManager" method="_on_freeze_time_toggled"]
+[connection signal="value_changed" from="DebugModeUI/PropertiesContainer/TransformProperty/SpinBox1" to="DebugModeUI" method="_on_transform_x_value_changed"]
+[connection signal="value_changed" from="DebugModeUI/PropertiesContainer/TransformProperty/SpinBox2" to="DebugModeUI" method="_on_transform_y_value_changed"]
+[connection signal="value_changed" from="DebugModeUI/PropertiesContainer/ScaleProperty/SpinBox1" to="DebugModeUI" method="_on_scale_x_value_changed"]
+[connection signal="value_changed" from="DebugModeUI/PropertiesContainer/ScaleProperty/SpinBox2" to="DebugModeUI" method="_on_scale_y_value_changed"]
+[connection signal="value_changed" from="DebugModeUI/PropertiesContainer/ZIndex/SpinBox1" to="DebugModeUI" method="_on_z_value_value_changed"]
+[connection signal="value_changed" from="DebugModeUI/PropertiesContainer/Health/SpinBox1" to="DebugModeUI" method="_on_health_value_value_changed"]

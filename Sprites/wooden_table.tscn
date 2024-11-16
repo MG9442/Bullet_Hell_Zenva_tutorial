@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8juvbrsmc1no"]
+
+[ext_resource type="Texture2D" uid="uid://dursshu58sslt" path="res://Assets/Environment/Dungeon Prison/Assets/Props.png" id="1_x0xxj"]
+[ext_resource type="PackedScene" uid="uid://cc1l0ivp88rxn" path="res://Scenes/debug_node.tscn" id="2_hg42d"]
+
+[node name="WoodenTable" type="Sprite2D"]
+z_index = 3
+texture = ExtResource("1_x0xxj")
+region_enabled = true
+region_rect = Rect2(192, 80, 48, 29)
+
+[node name="DebugNode" parent="." instance=ExtResource("2_hg42d")]

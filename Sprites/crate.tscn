@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c65n3eq8iof0l"]
+
+[ext_resource type="Texture2D" uid="uid://dursshu58sslt" path="res://Assets/Environment/Dungeon Prison/Assets/Props.png" id="1_ew6m7"]
+
+[node name="Crate" type="Sprite2D"]
+z_index = 2
+texture = ExtResource("1_ew6m7")
+region_enabled = true
+region_rect = Rect2(0, 9, 16, 23)

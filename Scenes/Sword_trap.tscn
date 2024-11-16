@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvdci6sv2suvb"]
+
+[ext_resource type="Texture2D" uid="uid://be3p2egk3n5gr" path="res://Assets/Weapons/Bone/Bone.png" id="1_8xpup"]
+[ext_resource type="PackedScene" uid="uid://bm0twax8j4vtb" path="res://Scenes/hit_box.tscn" id="2_jrt70"]
+[ext_resource type="PackedScene" uid="uid://cc1l0ivp88rxn" path="res://Scenes/debug_node.tscn" id="3_5j322"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dlac"]
+size = Vector2(5, 70)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dkfpv"]
+radius = 2.0
+height = 26.0
+
+[node name="Sword Trap" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_8xpup")
+region_enabled = true
+region_rect = Rect2(0, 0, 17, 81)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 3)
+shape = SubResource("RectangleShape2D_3dlac")
+
+[node name="HitBox" parent="." instance=ExtResource("2_jrt70")]
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(0, -22)
+shape = SubResource("CapsuleShape2D_dkfpv")
+
+[node name="DebugNode" parent="." instance=ExtResource("3_5j322")]
+
+[editable path="HitBox"]

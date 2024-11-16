@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bnb5s7r7fumud"]
+
+[node name="Debug2Component" type="HBoxContainer"]
+alignment = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Transform"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="SpinBox1" type="SpinBox" parent="."]
+layout_mode = 2
+max_value = 1e+10
+rounded = true
+
+[node name="SpinBox2" type="SpinBox" parent="."]
+layout_mode = 2
+max_value = 1e+10
+rounded = true

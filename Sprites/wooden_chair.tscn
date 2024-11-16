@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bn2s6s3rwkp4a"]
+
+[ext_resource type="Texture2D" uid="uid://dursshu58sslt" path="res://Assets/Environment/Dungeon Prison/Assets/Props.png" id="1_xijkg"]
+
+[node name="Wooden_Chair" type="Sprite2D"]
+z_index = 2
+texture = ExtResource("1_xijkg")
+region_enabled = true
+region_rect = Rect2(193, 16, 14, 29)

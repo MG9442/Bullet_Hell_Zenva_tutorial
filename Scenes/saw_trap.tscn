@@ -1,0 +1,120 @@
+[gd_scene load_steps=10 format=3 uid="uid://cioxilerkl6hj"]
+
+[ext_resource type="PackedScene" uid="uid://cc1l0ivp88rxn" path="res://Scenes/debug_node.tscn" id="1_gdkhj"]
+[ext_resource type="Texture2D" uid="uid://dursshu58sslt" path="res://Assets/Environment/Dungeon Prison/Assets/Props.png" id="1_n27nn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc4gi"]
+atlas = ExtResource("1_n27nn")
+region = Rect2(0, 177, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awft5"]
+atlas = ExtResource("1_n27nn")
+region = Rect2(16, 177, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ygw8e"]
+atlas = ExtResource("1_n27nn")
+region = Rect2(32, 177, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ct4io"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc4gi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awft5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ygw8e")
+}],
+"loop": true,
+"name": &"Saw",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_uys63"]
+resource_name = "BuzzLtoR"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 2.4, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1e-05), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.9, 2.4, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-10, 0), Vector2(-10, -1), Vector2(-10, -1), Vector2(10, -1), Vector2(10, -1), Vector2(10, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ion5a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-10, -1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_spf6v"]
+_data = {
+"BuzzLtoR": SubResource("Animation_uys63"),
+"RESET": SubResource("Animation_ion5a")
+}
+
+[node name="SawTrap" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_n27nn")
+region_enabled = true
+region_rect = Rect2(40, 162, 48, 13)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-10, -1)
+scale = Vector2(1, 1e-05)
+sprite_frames = SubResource("SpriteFrames_ct4io")
+animation = &"Saw"
+autoplay = "Saw"
+frame_progress = 0.236938
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_spf6v")
+}
+autoplay = "BuzzLtoR"
+
+[node name="DebugNode" parent="." instance=ExtResource("1_gdkhj")]

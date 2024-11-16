@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cglxec6psdo41"]
+
+[ext_resource type="Texture2D" uid="uid://daivkatgafwru" path="res://Assets/Environment/Dungeon Prison/Assets/Tiles.png" id="1_d1lwu"]
+
+[node name="Pillar" type="Sprite2D"]
+z_index = 3
+texture = ExtResource("1_d1lwu")
+region_enabled = true
+region_rect = Rect2(225, 105, 14, 47)

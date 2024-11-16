@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddsgdxkknf0jo"]
+
+[ext_resource type="Texture2D" uid="uid://daivkatgafwru" path="res://Assets/Environment/Dungeon Prison/Assets/Tiles.png" id="1_dst0j"]
+
+[node name="Banner" type="Sprite2D"]
+z_index = 10
+texture = ExtResource("1_dst0j")
+region_enabled = true
+region_rect = Rect2(87, 160, 18, 64)

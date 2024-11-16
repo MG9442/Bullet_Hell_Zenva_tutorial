@@ -1,0 +1,291 @@
+[gd_scene load_steps=27 format=3 uid="uid://b0e4vrq84uyv8"]
+
+[ext_resource type="Script" path="res://Scripts/KnightPlayer2D.gd" id="1_idx4v"]
+[ext_resource type="PackedScene" uid="uid://cc1l0ivp88rxn" path="res://Scenes/debug_node.tscn" id="2_cb10m"]
+[ext_resource type="Texture2D" uid="uid://b4mq34qcplh2d" path="res://Assets/Heroes/Knight/Idle/Idle-Sheet.png" id="2_wwlgr"]
+[ext_resource type="Texture2D" uid="uid://i8pxonjvj2vi" path="res://Assets/Heroes/Knight/Run/Run-Sheet.png" id="3_jw50e"]
+[ext_resource type="Texture2D" uid="uid://coinfb58t6jog" path="res://Assets/Weapons/Hands/Hands.png" id="4_0giev"]
+[ext_resource type="Texture2D" uid="uid://cnlwpyphsxt60" path="res://Assets/Weapons/Wood/Wood.png" id="6_t3cw8"]
+[ext_resource type="PackedScene" uid="uid://diu1eqlygtpy7" path="res://Scenes/wood_hammer.tscn" id="7_nyukh"]
+[ext_resource type="Script" path="res://Scripts/Bullet_pool.gd" id="8_56p46"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm1sv"]
+atlas = ExtResource("2_wwlgr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4ksf"]
+atlas = ExtResource("2_wwlgr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b3rr6"]
+atlas = ExtResource("2_wwlgr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mct6j"]
+atlas = ExtResource("2_wwlgr")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2t1f6"]
+atlas = ExtResource("3_jw50e")
+region = Rect2(0, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ai1cw"]
+atlas = ExtResource("3_jw50e")
+region = Rect2(64, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6vv7"]
+atlas = ExtResource("3_jw50e")
+region = Rect2(128, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb2xf"]
+atlas = ExtResource("3_jw50e")
+region = Rect2(192, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t65re"]
+atlas = ExtResource("3_jw50e")
+region = Rect2(256, 32, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpobu"]
+atlas = ExtResource("3_jw50e")
+region = Rect2(320, 32, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_osemi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm1sv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4ksf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b3rr6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mct6j")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2t1f6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ai1cw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c6vv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb2xf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t65re")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpobu")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ur7sk"]
+radius = 7.0
+height = 22.0
+
+[sub_resource type="Animation" id="Animation_7qmw5"]
+resource_name = "Club_AnimL"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RWeaponPivot/RHand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3.14159, 3.74024]
+}
+
+[sub_resource type="Animation" id="Animation_uxady"]
+resource_name = "Club_AnimR"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RWeaponPivot/RHand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.598648]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:WeaponSwinging")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RWeaponPivot/RHand/Wood_Hammer/Hammer_Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_fpy7f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RWeaponPivot/RHand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:WeaponSwinging")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("RWeaponPivot/RHand/Wood_Hammer/Hammer_Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_rxhcl"]
+resource_name = "ThrowHold_L"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RWeaponPivot/RHand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [3.14159, 3.74024]
+}
+
+[sub_resource type="Animation" id="Animation_is72m"]
+resource_name = "ThrowHold_R"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RWeaponPivot/RHand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.598648]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_814aw"]
+_data = {
+"Club_AnimL": SubResource("Animation_7qmw5"),
+"Club_AnimR": SubResource("Animation_uxady"),
+"RESET": SubResource("Animation_fpy7f"),
+"ThrowHold_L": SubResource("Animation_rxhcl"),
+"ThrowHold_R": SubResource("Animation_is72m")
+}
+
+[node name="KnightPlayer2D" type="CharacterBody2D"]
+position = Vector2(1, 0)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_idx4v")
+
+[node name="DebugNode" parent="." instance=ExtResource("2_cb10m")]
+position = Vector2(-1, -14)
+
+[node name="Anim_Body" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_osemi")
+animation = &"Idle"
+autoplay = "Idle"
+frame = 2
+frame_progress = 0.702416
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+z_index = 4
+position = Vector2(-1, -15)
+shape = SubResource("CapsuleShape2D_ur7sk")
+
+[node name="LHand" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-14, -14)
+texture = ExtResource("4_0giev")
+region_enabled = true
+region_rect = Rect2(4, 21, 7, 6)
+
+[node name="LWeaponSlot" type="Sprite2D" parent="LHand"]
+texture = ExtResource("6_t3cw8")
+region_enabled = true
+region_rect = Rect2(129, 0, 14, 16)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_814aw")
+}
+
+[node name="RWeaponPivot" type="Node2D" parent="."]
+position = Vector2(0, -14)
+
+[node name="RHand" type="Sprite2D" parent="RWeaponPivot"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(14, 0)
+texture = ExtResource("4_0giev")
+region_enabled = true
+region_rect = Rect2(21, 21, 7, 6)
+
+[node name="Wood_Hammer" parent="RWeaponPivot/RHand" instance=ExtResource("7_nyukh")]
+
+[node name="BulletContainer" type="Node" parent="." groups=["Bullets"]]
+script = ExtResource("8_56p46")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_started" from="AnimationPlayer" to="." method="_on_animation_player_animation_started"]

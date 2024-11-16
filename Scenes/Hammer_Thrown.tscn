@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://b1xtcyxps1np0"]
+
+[ext_resource type="Texture2D" uid="uid://cnlwpyphsxt60" path="res://Assets/Weapons/Wood/Wood.png" id="1_w6jhj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6lthg"]
+size = Vector2(17, 11)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_idjw6"]
+radius = 3.0
+height = 32.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Wood_Hammer" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+rotation = 6.28319
+texture = ExtResource("1_w6jhj")
+region_enabled = true
+region_rect = Rect2(16, 16, 16, 31)
+
+[node name="Hammer_Hitbox" type="Area2D" parent="Wood_Hammer"]
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wood_Hammer/Hammer_Hitbox"]
+position = Vector2(0.499955, -10.5)
+shape = SubResource("RectangleShape2D_6lthg")
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_idjw6")
+disabled = true

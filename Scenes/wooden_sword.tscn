@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgl28o5i8ri5w"]
+
+[ext_resource type="Texture2D" uid="uid://cnlwpyphsxt60" path="res://Assets/Weapons/Wood/Wood.png" id="1_8ib1n"]
+[ext_resource type="Script" path="res://Scenes/WoodenSword.gd" id="2_nat42"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0dc6t"]
+size = Vector2(10, 30)
+
+[node name="wooden_sword" type="Sprite2D"]
+texture = ExtResource("1_8ib1n")
+region_enabled = true
+region_rect = Rect2(3, 6, 10, 41)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("2_nat42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_0dc6t")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

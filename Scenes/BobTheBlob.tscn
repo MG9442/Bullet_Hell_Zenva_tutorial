@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjsjyhl0obfga"]
+
+[ext_resource type="Texture2D" uid="uid://rqax0lyeuso8" path="res://Assets/Enemy/Bob the Blob/Bob the Blob.png" id="1_ef3os"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h23te"]
+atlas = ExtResource("1_ef3os")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uy88h"]
+atlas = ExtResource("1_ef3os")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpepa"]
+atlas = ExtResource("1_ef3os")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjkxi"]
+atlas = ExtResource("1_ef3os")
+region = Rect2(512, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xomr5"]
+atlas = ExtResource("1_ef3os")
+region = Rect2(1024, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cajoq"]
+atlas = ExtResource("1_ef3os")
+region = Rect2(1536, 0, 512, 512)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y12xk"]
+atlas = ExtResource("1_ef3os")
+region = Rect2(2048, 0, 512, 512)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4nfew"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h23te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy88h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy88h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h23te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uy88h")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpepa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bjkxi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xomr5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cajoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y12xk")
+}],
+"loop": true,
+"name": &"Moving",
+"speed": 5.0
+}]
+
+[node name="BobTheBlob" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_4nfew")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.861293

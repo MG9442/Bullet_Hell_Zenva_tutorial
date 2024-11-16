@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds065pswt2mnm"]
+
+[ext_resource type="Texture2D" uid="uid://coinfb58t6jog" path="res://Assets/Weapons/Hands/Hands.png" id="1_kbdiq"]
+[ext_resource type="Texture2D" uid="uid://be3p2egk3n5gr" path="res://Assets/Weapons/Bone/Bone.png" id="2_244wp"]
+
+[node name="Hands" type="Node"]
+
+[node name="RHand2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(10, -13)
+texture = ExtResource("1_kbdiq")
+region_enabled = true
+region_rect = Rect2(21, 21, 7, 6)
+
+[node name="RWeaponSlot" type="Sprite2D" parent="RHand2"]
+z_index = -1
+position = Vector2(1, -6)
+texture = ExtResource("2_244wp")
+region_enabled = true
+region_rect = Rect2(17, 17, 14, 31)
+
+[node name="LHand2" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(-12, -13)
+texture = ExtResource("1_kbdiq")
+region_enabled = true
+region_rect = Rect2(4, 21, 7, 6)

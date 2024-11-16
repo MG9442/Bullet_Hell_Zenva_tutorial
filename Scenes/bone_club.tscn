@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3u0llk2xrepw"]
+
+[ext_resource type="Texture2D" uid="uid://be3p2egk3n5gr" path="res://Assets/Weapons/Bone/Bone.png" id="1_626pq"]
+
+[node name="Bone_Club" type="Sprite2D"]
+position = Vector2(0, -6)
+texture = ExtResource("1_626pq")
+region_enabled = true
+region_rect = Rect2(17, 17, 14, 31)
