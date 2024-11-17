@@ -283,8 +283,17 @@ region_enabled = true
 region_rect = Rect2(21, 21, 7, 6)
 
 [node name="Wood_Hammer" parent="RWeaponPivot/RHand" instance=ExtResource("7_nyukh")]
+modulate = Color(0.605274, 0.605274, 0.605274, 1)
 
 [node name="BulletContainer" type="Node" parent="." groups=["Bullets"]]
 script = ExtResource("8_56p46")
 
+[node name="AxeThrowRaycast" type="RayCast2D" parent="."]
+visible = false
+
+[node name="Throw_cooldown" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="timeout" from="Throw_cooldown" to="." method="_on_throw_cooldown_timeout"]
