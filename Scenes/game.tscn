@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://dvxwkvoilvb0c"]
+[gd_scene load_steps=17 format=3 uid="uid://dvxwkvoilvb0c"]
 
 [ext_resource type="Script" path="res://Scenes/GameManager.gd" id="1_qy233"]
 [ext_resource type="Script" path="res://Scripts/DebugModeUI.gd" id="2_ww2aj"]
 [ext_resource type="PackedScene" uid="uid://t4fqen3845vo" path="res://Scenes/background.tscn" id="6_yh5as"]
+[ext_resource type="Script" path="res://Scenes/spawner_manager.gd" id="7_27pr3"]
 [ext_resource type="PackedScene" uid="uid://b0e4vrq84uyv8" path="res://Scenes/KnightPlayer2DWHands.tscn" id="7_l44vk"]
+[ext_resource type="PackedScene" uid="uid://xlbwo2qvigic" path="res://Scenes/green_slime.tscn" id="7_ns1av"]
 [ext_resource type="Script" path="res://Scripts/PlayerCamera.gd" id="9_ij1am"]
 [ext_resource type="PackedScene" uid="uid://bnj5jkm6qcggl" path="res://Scenes/target_debug.tscn" id="12_d1n4n"]
 
@@ -20,6 +22,11 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0j08k"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4sn38"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ruui0"]
+vertices = PackedVector2Array(372.023, 245, -389, 245, -389, -207.023, 372.969, -208.969)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-399, -217, -399, 255, 382, 255, 383, -219)])
 
 [node name="World" type="Node2D"]
 
@@ -208,6 +215,48 @@ position = Vector2(98, 124)
 Show_label = false
 
 [node name="Background" parent="." instance=ExtResource("6_yh5as")]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Background"]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_ruui0")
+
+[node name="SpawnerManager" type="Node2D" parent="."]
+script = ExtResource("7_27pr3")
+
+[node name="Spawn1" type="Node2D" parent="SpawnerManager"]
+position = Vector2(-317, -139)
+
+[node name="Spawn2" type="Node2D" parent="SpawnerManager"]
+position = Vector2(2, -150)
+
+[node name="Spawn3" type="Node2D" parent="SpawnerManager"]
+position = Vector2(228, -139)
+
+[node name="Spawn4" type="Node2D" parent="SpawnerManager"]
+position = Vector2(-296, 158)
+
+[node name="Spawn5" type="Node2D" parent="SpawnerManager"]
+position = Vector2(-4, 168)
+
+[node name="Spawn6" type="Node2D" parent="SpawnerManager"]
+position = Vector2(225, 142)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="GreenSlime" parent="Enemies" instance=ExtResource("7_ns1av")]
+position = Vector2(-255, -147)
+
+[node name="GreenSlime2" parent="Enemies" instance=ExtResource("7_ns1av")]
+position = Vector2(-280, -91)
+
+[node name="GreenSlime3" parent="Enemies" instance=ExtResource("7_ns1av")]
+position = Vector2(-211, -100)
+
+[node name="GreenSlime4" parent="Enemies" instance=ExtResource("7_ns1av")]
+position = Vector2(-122, -153)
+
+[node name="GreenSlime5" parent="Enemies" instance=ExtResource("7_ns1av")]
+position = Vector2(-192, -144)
 
 [connection signal="toggled" from="DebugModeUI/AdminControlsContainer/FreezeTime" to="GameManager" method="_on_freeze_time_toggled"]
 [connection signal="value_changed" from="DebugModeUI/PropertiesContainer/TransformProperty/SpinBox1" to="DebugModeUI" method="_on_transform_x_value_changed"]

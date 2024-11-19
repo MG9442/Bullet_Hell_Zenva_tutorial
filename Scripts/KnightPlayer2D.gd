@@ -108,19 +108,8 @@ func Handle_Weapon_Rotation():
 	var attempted_pivot = snapped(r_weapon_pivot.rotation_degrees,1)
 	var attempted_pivot_abs = abs(attempted_pivot)
 	#print("attempted_pivot =" + str(attempted_pivot))
-	# Ensure that pivot doesn't rotate behind back while swinging
-	if WeaponSwinging:
-		Axe_Throw_raycast.target_position = -(global_position - get_global_mouse_position())
-		if (DirectionToggle and (attempted_pivot_abs <= 90 or attempted_pivot_abs >= 270)):
-			r_weapon_pivot.rotation_degrees = last_known_pivot
-			return
-		elif (!DirectionToggle and (attempted_pivot_abs >= 90 and attempted_pivot_abs <= 270)):
-			r_weapon_pivot.rotation_degrees = last_known_pivot
-			return
-		else:
-			r_weapon_pivot.rotation_degrees = attempted_pivot
-			last_known_pivot = attempted_pivot
-	
+	Axe_Throw_raycast.target_position = -(global_position - get_global_mouse_position())
+
 	# Reset rotation by adding/subtracting 360 degrees
 	if attempted_pivot <= -360:
 		r_weapon_pivot.rotation_degrees += 360
@@ -141,10 +130,10 @@ func Handle_Weapon_Rotation():
 		Flip_sprite_Direction(DirectionToggle)
 		#print("DirectionToggled Right")
 		
-	if DirectionToggle and !WeaponSwinging and snapped(r_hand.rotation_degrees,1) != 180: #Left side
+	if DirectionToggle  and snapped(r_hand.rotation_degrees,1) != 180: #Left side
 		r_hand.rotation_degrees = 180 # Rotate
 		#print("Rotating Hand position 180")
-	elif !DirectionToggle and !WeaponSwinging and snapped(r_hand.rotation_degrees,1) != 0: #Right side
+	elif !DirectionToggle and snapped(r_hand.rotation_degrees,1) != 0: #Right side
 		r_hand.rotation_degrees = 0 # Set to default
 		#print("Rotating Hand position to 0")
 
@@ -159,6 +148,7 @@ func Throw_weapon():
 	var Thrown_weapon : Node2D # Node returned from bullet container
 	var vector_to_mouse : Vector2 = -(global_position - get_global_mouse_position()).normalized()
 	Thrown_weapon = BulletContainer.get_bullet()
+	Thrown_weapon.activate_bullet()
 	Thrown_weapon.visible = true
 	Thrown_weapon.global_position = Held_weapon.global_position
 	Thrown_weapon.rotation = r_weapon_pivot.rotation
@@ -167,6 +157,7 @@ func Throw_weapon():
 	Thrown_weapon.modulate = Held_weapon.modulate
 	Thrown_weapon.scale = Held_weapon.scale
 	Held_weapon.visible = false
+	Thrown_weapon.set_speed(Throwing_speed) #Pass speed to determine dmg
 	Throw_cooldown.start()
 	#print("Power_timer elapsed timer = " + str(snapped(Power_timer,0.1)))
 

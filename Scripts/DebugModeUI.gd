@@ -153,10 +153,3 @@ func _on_health_value_value_changed(value):
 		selected_object = null
 	print("Object Health = " + str(object_health) + " value = " + str(value))
 	print("damage value = " + str(health_diff))
-
-func _on_transform_x_value_changed(value):
-	pass # Replace with function body.
-
-
-func _on_transform_y_value_changed(value):
-	pass # Replace with function body.
